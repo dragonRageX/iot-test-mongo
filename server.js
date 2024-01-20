@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const sensorDataSchema = require("./SensorDataSchema.js");
 const morgan = require("morgan");
 app.use(morgan("dev"));
 dotenv.config();
@@ -14,10 +15,20 @@ require("./db.js");
 app.post("/api/posts", (req, res) => {
   console.log("POST API HIT!");
   console.log(req.body);
-  res.status(200).json({
-    success: true,
-    message: "true",
+  const data = new sensorDataSchema({
+    temperature: req.body.temperature,
+    humidity: req.body.humidity,
   });
+  console.log(data)
+  try{
+    data.save()
+    res.status(200).json({
+      success: true,
+      message: "true",
+    });
+  }catch(err){
+    res.status(500).json({error:"UNexpected error occured"})
+  }
 });
 
 app.get("/test", (req, res) => {
