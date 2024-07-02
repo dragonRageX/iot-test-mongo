@@ -31,15 +31,6 @@ app.post("/api/posts", (req, res) => {
   }
 });
 
-app.get("/test", (req, res) => {
-  console.log("GET API HIT");
-  res.status(200).json({
-    success: true,
-  });
-});
-
 app.listen(process.env.PORT, () =>
   console.log(`\nServer running on port ${process.env.PORT}\n\n`)
 );
-// mongoose.connection.once("open", () => {
-//   });
